@@ -11,7 +11,7 @@
 
     <artifactId>basicOperate</artifactId>
      <properties>
-         <flinkVersion>1.10.1</flinkVersion>
+         <flinkVersion>1.10.2</flinkVersion>
      </properties>
      <dependencies>
          <dependency>
@@ -24,10 +24,92 @@
              <artifactId>flink-streaming-scala_2.11</artifactId>
              <version>${flinkVersion}</version>
          </dependency>
+
+         <dependency>
+             <groupId>org.apache.flink</groupId>
+             <artifactId>flink-table-api-scala-bridge_2.11</artifactId>
+             <version>${flinkVersion}</version>
+         </dependency>
+         <dependency>
+             <groupId>org.apache.flink</groupId>
+             <artifactId>flink-table-planner-blink_2.11</artifactId>
+             <version>${flinkVersion}</version>
+         </dependency>
+         <dependency>
+             <groupId>org.apache.flink</groupId>
+             <artifactId>flink-table-common</artifactId>
+             <version>${flinkVersion}</version>
+         </dependency>
          <dependency>
              <groupId>org.apache.flink</groupId>
              <artifactId>flink-clients_2.11</artifactId>
              <version>${flinkVersion}</version>
          </dependency>
      </dependencies>
+
+    <build>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+        <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.scalastyle</groupId>-->
+<!--                <artifactId>scalastyle-maven-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <configLocation>${project.basedir}/../../tools/maven/scalastyle-config.xml</configLocation>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+            <!--用于编译/测试/运行/记录任何maven项目的scala代码。-->
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.2.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <args>
+                                <arg>-dependencyfile</arg>
+                                <arg>${project.build.directory}/.scala_dependencies</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--       打jar包的插件       -->
+            <!--将项目类及其依赖项重新打包到一个jar中，可以重命名类或删除未使用的类。-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass></mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
