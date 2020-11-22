@@ -10,7 +10,5 @@ object basic_opt {
 				.inStreamingMode()
 				.build()
 		val fsTableEnv = TableEnvironment.create(fsSettings)
-
-
 	}
 }
