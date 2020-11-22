@@ -3,14 +3,13 @@ import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironm
 
 object first {
 	def main (args: Array[String]): Unit = {
-		//		val envs: StreamExecutionEnvironment = StreamExecutionEnvironment
-//				.getExecutionEnvironment
+				val envs: StreamExecutionEnvironment = StreamExecutionEnvironment
+				.getExecutionEnvironment
 
 		val conf=new Configuration()
 		conf.setString("rest.address","127.0.0.1")
 		conf.setInteger("rest.port",8081)
 
-        val envs = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(conf)
 		val text: DataStream[String] = envs.readTextFile("E:\\test\\flinkData\\demo1\\a.txt")
 		println("parallelism:", text.parallelism)
 		text.print()
