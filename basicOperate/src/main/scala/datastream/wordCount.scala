@@ -1,4 +1,4 @@
-package stream_opt
+package datastream
 
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
 
