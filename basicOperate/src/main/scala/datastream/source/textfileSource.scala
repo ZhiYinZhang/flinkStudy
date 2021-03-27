@@ -1,8 +1,7 @@
-package stream_opt
+package datastream.source
 
 import org.apache.flink.api.java.io.TextInputFormat
 import org.apache.flink.streaming.api.functions.source.FileProcessingMode
-import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.scala._
 
 object textfileSource {
@@ -14,7 +13,7 @@ object textfileSource {
      */
     env.readTextFile("e://data//flink.txt")
       .flatMap(_.split(" "))
-      .map((_,1))
+      .map((_, 1))
       .keyBy(0)
       .sum(1)
       .print()
@@ -29,7 +28,7 @@ object textfileSource {
       3000
     )
       .flatMap(_.split(" "))
-      .map((_,1))
+      .map((_, 1))
       .keyBy(0)
       .sum(1)
       .print()

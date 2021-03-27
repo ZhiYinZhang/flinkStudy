@@ -1,4 +1,4 @@
-package transformation;
+package datastream.transformation;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.functions.RichMapFunction;
@@ -25,7 +25,7 @@ public class map {
             }
         });
 
-        //第二种：lanbda表达式，有的操作需要指定returns返回值类型，最好指定
+        //第二种：lanbda表达式，有的操作需要指定returns返回值类型，最好指定;map可以不用指定
         SingleOutputStreamOperator<Integer> res2 = nums.map(i -> i * 2).returns(Types.INT);
 
         //第三种：RichMapFunction接口，有更丰富的方法
