@@ -30,7 +30,7 @@ public class map {
 
         //第三种：RichMapFunction接口，有更丰富的方法
         SingleOutputStreamOperator<Integer> rich_res = nums.map(new RichMapFunction<Integer, Integer>() {
-            //open，在构造方法之后，map方法执行之前，执行一次，Configuration可以拿到全局配置
+            //open，在构造方法之后，map方法执行之前，每个subTask执行一次，Configuration可以拿到全局配置
             //用来初始化一些链接，或初始化或恢复state
             @Override
             public void open(Configuration parameters) throws Exception {
@@ -42,7 +42,7 @@ public class map {
                 return integer * 2;
             }
 
-            //subTask销毁之前，执行一次，通常是作为资源释放
+            //每个subTask销毁之前，执行一次，通常是作为资源释放
             @Override
             public void close() throws Exception {
                 System.out.println("关闭");
