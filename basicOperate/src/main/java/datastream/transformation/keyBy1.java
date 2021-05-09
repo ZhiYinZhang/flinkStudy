@@ -26,6 +26,7 @@ public class keyBy1 {
         KeyedStream<Tuple2<String, Integer>, String> keyed = wordAndOne.keyBy(value -> value.f0);
 
 
+
         //第二种：使用java bean的方式封装数据
         SingleOutputStreamOperator<wordCounts> wordAndOne2 = words.map(new MapFunction<String, wordCounts>() {
             @Override
