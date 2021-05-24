@@ -5,8 +5,7 @@ import java.sql.Timestamp
 import org.apache.flink.api.scala.ExecutionEnvironment
 import org.apache.flink.table.api.Table
 import org.apache.flink.table.api.bridge.scala.BatchTableEnvironment
-import org.apache.flink.table.factories.TableSourceFactory
-import org.apache.flink.types.Row
+
 object sql2Table {
   def main(args: Array[String]): Unit = {
     val benv: ExecutionEnvironment = ExecutionEnvironment.getExecutionEnvironment
@@ -21,18 +20,18 @@ object sql2Table {
       |age int
       |) with (
       |'connector.type' = 'jdbc',
-      |'connector.url' = 'jdbc:mysql://192.168.35.166:3306/test',
+      |'connector.url' = 'jdbc:mysql://10.100.100.66:3306/test',
       |'connector.driver' = 'com.mysql.jdbc.Driver',
-      |'connector.username' = 'root',
-      |'connector.password' = 'CJYcjy!@#$%^123456',
-      |'connector.table' = 'flink_test'
+      |'connector.username' = 'srun4000',
+      |'connector.password' = 'srunsoft',
+      |'connector.table' = 'users'
       |)
       |""".stripMargin
     val printSql="""
       |create table sink_print(
-      |id int,
-      |name string,
-      |age int
+      |user_id int,
+      |user_name string,
+      |user_real_name int
       |)with(
       |'connector'='print'
       |)
