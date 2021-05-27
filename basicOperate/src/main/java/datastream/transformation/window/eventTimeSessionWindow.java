@@ -50,8 +50,6 @@ public class eventTimeSessionWindow {
                 .sum(1);
 
         summed.print();
-
         senv.execute();
-
     }
 }

@@ -5,9 +5,8 @@ import org.apache.flink.streaming.api.functions.windowing.ProcessAllWindowFuncti
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
-
 import java.sql.Timestamp;
-import java.time.Instant;
+
 
 public class MyProcessWindowFunction extends ProcessAllWindowFunction<Integer, Tuple2<String,Integer>, TimeWindow> {
 
