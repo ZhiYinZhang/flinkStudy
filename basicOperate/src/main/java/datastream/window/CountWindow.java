@@ -35,6 +35,7 @@ public class CountWindow {
                 .countWindow(5);
         SingleOutputStreamOperator<Tuple2<String, Integer>> summed = countWindow.sum(1);
 
+
         summed.print();
         senv.execute();
 
