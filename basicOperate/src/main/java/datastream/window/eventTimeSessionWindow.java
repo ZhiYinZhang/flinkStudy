@@ -1,4 +1,4 @@
-package datastream.transformation.window;
+package datastream.window;
 
 
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
