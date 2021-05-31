@@ -38,7 +38,7 @@ public class eventTimeSlidingWindow {
                     }
                 });
 
-        SingleOutputStreamOperator<Tuple3<String, String, Integer>> process = socketTextStream
+        SingleOutputStreamOperator<Tuple2<String, Integer>> process = socketTextStream
                 .assignTimestampsAndWatermarks(watermarkStrategy)
                 .map(new MapFunction<String, Tuple2<String, Integer>>() {
                     @Override
@@ -50,8 +50,7 @@ public class eventTimeSlidingWindow {
                 })
                 .keyBy(x -> x.f0)
                 .window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(5)))
-                .process(new MyProcessWindowFunction());
-//                .sum(1);
+                .sum(1);
 
         process.print();
         senv.execute();
