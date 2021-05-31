@@ -26,7 +26,7 @@ public class slidingWindow {
         });
 
         SingleOutputStreamOperator<Tuple2<String, Integer>> summed = map.keyBy(value -> value.f0)
-                .window(SlidingProcessingTimeWindows.of(Time.seconds(6), Time.seconds(3)))
+                .window(SlidingProcessingTimeWindows.of(Time.seconds(10), Time.seconds(3)))
                 .sum(1);
 
         summed.print();

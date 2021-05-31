@@ -1,30 +1,30 @@
 package datastream.window;
 
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.streaming.api.functions.windowing.ProcessAllWindowFunction;
+import org.apache.flink.api.java.tuple.Tuple3;
+import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
 import java.sql.Timestamp;
 
-
-public class MyProcessWindowFunction extends ProcessAllWindowFunction<Integer, Tuple2<String,Integer>, TimeWindow> {
+//参数：IN,OUT,KEY,W
+public class MyProcessWindowFunction extends ProcessWindowFunction<Tuple2<String,Integer>,Tuple3<String,String,Integer>,String,TimeWindow> {
 
     @Override
-    public void process(Context context, Iterable<Integer> elements, Collector<Tuple2<String,Integer>> out) throws Exception {
-        Integer sum=0;
+    public void process(String s, Context context, Iterable<Tuple2<String, Integer>> elements, Collector<Tuple3<String, String, Integer>> out) throws Exception {
+        TimeWindow window = context.window();
+        String start = new Timestamp(window.getStart()).toString();
+        String end = new Timestamp(window.getEnd()).toString();
 
-        for (Integer element:elements) {
-             sum+=element;
+        long l = context.currentProcessingTime();
+        System.out.println(new Timestamp(l).toString());
+
+        Integer value=0;
+        for (Tuple2<String, Integer> element:elements) {
+            value+=element.f1;
         }
 
-        TimeWindow window = context.window();
-        long start = window.getStart();
-        long end = window.getEnd();
-        String start_timestamp = new Timestamp(start).toString();
-        String end_timestamp = new Timestamp(end).toString();
-
-        out.collect(Tuple2.of("window: "+start_timestamp+" ~ "+end_timestamp,sum));
-
+        out.collect(Tuple3.of(start+"~"+end,s,value));
     }
 }
