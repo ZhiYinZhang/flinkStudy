@@ -10,6 +10,8 @@ import org.apache.flink.util.Collector;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Stream;
 
 public class flatMap {
     public static void main(String[] args) throws Exception{

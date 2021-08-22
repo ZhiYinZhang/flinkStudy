@@ -1,4 +1,4 @@
-package datastream.window;
+package datastream.operators.window;
 
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.functions.windowing.ProcessAllWindowFunction;

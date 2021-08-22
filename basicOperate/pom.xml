@@ -91,7 +91,20 @@
          <dependency>
              <groupId>mysql</groupId>
              <artifactId>mysql-connector-java</artifactId>
-             <version>5.1.38</version>
+             <version>5.1.6</version>
+         </dependency>
+
+         <!--debezium-->
+         <dependency>
+             <groupId>org.apache.flink</groupId>
+             <artifactId>flink-json</artifactId>
+             <version>${flink.version}</version>
+         </dependency>
+
+         <dependency>
+             <groupId>com.zaxxer</groupId>
+             <artifactId>HikariCP</artifactId>
+             <version>4.0.3</version>
          </dependency>
      </dependencies>
 

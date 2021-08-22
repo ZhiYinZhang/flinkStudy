@@ -1,11 +1,10 @@
 package sqlAndTable.stream
 
-import org.apache.flink.api.scala.ExecutionEnvironment
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
-import org.apache.flink.table.api.{Table, TableResult}
+import org.apache.flink.table.api.Table
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 
-object readKafka {
+object readKafkaCsv {
   def main(args: Array[String]): Unit = {
     val senv: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     val stenv: StreamTableEnvironment = StreamTableEnvironment.create(senv)
@@ -20,8 +19,8 @@ object readKafka {
       |age int
       |)with(
       |'connector'='kafka',
-      |'topic'='KAFKATEST02',
-      |'properties.bootstrap.servers'='node2.hadoop.com:9092',
+      |'topic'='test',
+      |'properties.bootstrap.servers'='192.168.35.164:9092',
       |'properties.group.id'='testGroup',
       |'scan.startup.mode'='latest-offset',
       |'format'='csv',

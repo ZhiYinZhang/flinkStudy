@@ -1,4 +1,4 @@
-package datastream.window;
+package datastream.operators.window;
 
 
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
@@ -8,13 +8,12 @@ import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.assigners.EventTimeSessionWindows;
-import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
+import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
 import java.time.Duration;
 
-public class eventTimeTumblingWindow {
+public class eventTimeSlidingWindow {
     public static void main(String[] args) throws Exception{
         StreamExecutionEnvironment senv = StreamExecutionEnvironment.getExecutionEnvironment();
 
@@ -37,7 +36,7 @@ public class eventTimeTumblingWindow {
                     }
                 });
 
-        SingleOutputStreamOperator<Tuple2<String, Integer>> summed = socketTextStream
+        SingleOutputStreamOperator<Tuple2<String, Integer>> process = socketTextStream
                 .assignTimestampsAndWatermarks(watermarkStrategy)
                 .map(new MapFunction<String, Tuple2<String, Integer>>() {
                     @Override
@@ -48,10 +47,10 @@ public class eventTimeTumblingWindow {
                     }
                 })
                 .keyBy(x -> x.f0)
-                .window(TumblingEventTimeWindows.of(Time.seconds(5)))
+                .window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(5)))
                 .sum(1);
 
-        summed.print();
+        process.print();
         senv.execute();
     }
 }
