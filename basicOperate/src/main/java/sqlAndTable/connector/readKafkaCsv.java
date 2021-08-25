@@ -1,4 +1,4 @@
-package sqlAndTable;
+package sqlAndTable.connector;
 
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.api.java.tuple.Tuple;
